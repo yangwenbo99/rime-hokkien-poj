@@ -1,0 +1,265 @@
+# Rime schema
+# vim: set sw=2 sts=2 et:
+# encoding: utf-8
+
+schema:
+  schema_id: blg_choan_poj
+  name: 閩南語泉州音白話字
+  version: "0.9"
+  author:
+    - 阿托 <a-thok@outlook.com>
+    - A-Phok <yangwenbo99@gmail.com>
+  description: |
+    閩南語輸入方案
+    採用白話字
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [ 中文, 西文 ]
+  - name: full_shape
+    states: [ 半角, 全角 ]
+  - name: simplification
+    states: [ 漢字, 汉字 ]
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - echo_translator
+    - punct_translator
+    - r10n_translator
+    - reverse_lookup_translator
+  filters:
+    - simplifier
+    - uniquifier
+
+speller:
+  alphabet: 'zyxwvutsrqponmlkjihgfedcba~[/\]90-;'
+  initials: zyxwvutsrqponmlkjihgfedcba
+  delimiter: " '"
+  algebra:
+    - abbrev/^([ptkbgmlsch]h?).+$/$1/ 
+    - xform/^c/ts/
+    - derive/uih/ueh/
+    - derive/^j/l/
+    - derive/Ia/io/
+    - derive/ee/e/
+    - derive/enn/inn/
+    - derive/^([mn]g?)ee/$1i/
+    - derive/ur/ir/
+    - derive/Er/er/
+    - derive/ere/ue/
+    - derive/uIn?n?/ng/
+    - derive/uainn/uinn/
+    - derive/uAinn/uinn/
+    - derive/iO/io/
+    - derive/(t?sh?)iO/$1o/
+    - derive/U/u/
+    - derive/aI/ui/
+    - derive/aI/ai/
+    - derive/^mue/mui/
+    - derive/ern(\d?\s?)/un$1/
+    - derive/ern/irn/
+    - derive/IR/ir/
+    - derive/oO/oo/
+    - derive/ik/iak/		#市區、海口
+    #- derive/erng/ng/		#市區、海口
+    #- derive/7/3/		#陰陽去本調
+    #- derive/ir/i/		#海口腔
+    #- derive/er(h?)(.)/e$1$2/		#海口腔
+    #- derive/6/1/		#海口腔
+    #- derive/iO/er/		#永春
+    #- derive/aInn/ing/	#山內腔（永春、安溪…）
+    #- derive/naI/ling/	#山內腔
+    #- derive/ngaI/ging/	#山內腔
+    #- derive/ia?m/em/	#惠安
+    #- derive/ia?n/en/	#惠安
+    - derive/erm/im/	#「鑫」、「欣」讀做im韻
+    - derive/^([a-z]+)\d$/$1/
+    - 'xlit 12345678 [/\]90-;'
+
+translator:
+  dictionary: banlam
+  preedit_format:
+    # As speller
+    - xform/^c/ts/
+    - derive/uih/ueh/
+    - derive/Ia/io/
+    - derive/ee/e/
+    - derive/enn/inn/
+    - derive/^([mn]g?)ee/$1i/
+    - derive/ur/ir/
+    - derive/Er/er/
+    - derive/ere/ue/
+    - derive/uIn?n?/ng/
+    - derive/uainn/uinn/
+    - derive/uAinn/uinn/
+    - derive/iO/io/
+    - derive/(t?sh?)iO/$1o/
+    - derive/U/u/
+    - derive/aI/ui/
+    - derive/aI/ai/
+    - derive/^mue/mui/
+    - derive/ern(\d?\s?)/un$1/
+    - derive/ern/irn/
+    - derive/IR/ir/
+    - derive/oO/oo/
+    - derive/ik/iak/		#市區、海口
+    #- derive/erng/ng/		#市區、海口
+    #- derive/7/3/		#陰陽去本調
+    #- derive/ir/i/		#海口腔
+    #- derive/er(h?)(.)/e$1$2/		#海口腔
+    #- derive/6/1/		#海口腔
+    #- derive/iO/er/		#永春
+    #- derive/aInn/ing/	#山內腔（永春、安溪…）
+    #- derive/naI/ling/	#山內腔
+    #- derive/ngaI/ging/	#山內腔
+    #- derive/ia?m/em/	#惠安
+    #- derive/ia?n/en/	#惠安
+    - derive/erm/im/	#「鑫」、「欣」讀做im韻
+    - derive/^([a-z]+)\d$/$1/
+    - 'xlit 12345678 [/\]90-;'
+  enable_sentence: true
+  enable_user_dict: true
+  spelling_hints: 3
+  comment_format:
+    - xform/^c/ts/
+    - derive/uih/ueh/
+    - xform/Ia/io/
+    - derive/ee/e/
+    - derive/enn/inn/
+    - derive/^([mn]g?)ee/$1i/
+    - derive/ur/ir/
+    - xform/Er/er/
+    - derive/ere/ue/
+    - xform/uIn?n?/ng/
+    - xform/uainn/uinn/
+    - xform/uAinn/uinn/
+    - xform/(t?sh?)iO/$1o/
+    - xform/iO/io/
+    - xform/U/u/
+    - xform/aI/ui/
+    - xform/aI/ai/
+    - derive/^mue/mui/
+    - derive/ern(\d?\s?)/un$1/
+    - derive/ern/irn/
+    - xform/IR/ir/
+    - xform/oO/oo/
+    - derive/ik/iak/		#市區、海口
+    - derive/erm/im/	#「鑫」、「欣」讀做im韻
+    - derive/^([a-z]+)\d$/$1/
+    - 'xlit 12345678 [/\]90-;'
+
+    - derive/uinn/un/   # 暈
+    - derive/uang/ong/    
+    - xform/^ts/ch/                                 
+    - xform/nn$/ⁿ/
+    - xform/nnh$/hⁿ/
+    - xform/oo/o͘/      
+    - xform/ua/oa/      # 拖, 歪
+    - xform/ue/oe/      # 話
+    - xform/ing/eng/    # 英
+    - xform/ik/ek/      # 黑
+    - derive/hⁿ/ⁿh/     # Error tolerance
+
+reverse_lookup:
+  dictionary: luna_pinyin
+  prefix: "`"
+  tips: 〔拼音〕
+  preedit_format:
+    - xform/([nljqxy])v/$1ü/
+  comment_format:
+    # As speller
+    - xform/^c/ts/
+    - derive/uih/ueh/
+    - xform/Ia/io/
+    - xform/ee/e/
+    - derive/enn/inn/
+    - derive/^([mn]g?)ee/$1i/
+    - derive/ur/ir/
+    - xform/Er/er/
+    - derive/ere/ue/
+    - xform/uIn?n?/ng/
+    - derive/uainn/uinn/
+    - xform/uAinn/uinn/
+    - xform/iO/io/
+    - derive/(t?sh?)iO/$1o/
+    - xform/U/u/
+    - xform/aI/ui/
+    - xform/aI/ai/
+    - derive/^mue/mui/
+    - xform/ern(\d?\s?)/un$1/
+    - xform/ern/irn/
+    - xform/IR/ir/
+    - xform/oO/oo/
+    - derive/ik/iak/		#市區、海口
+    - derive/erm/im/	#「鑫」、「欣」讀做im韻
+    - derive/^([a-z]+)\d$/$1/
+    - 'xlit 12345678 [/\]90-;'
+
+    # Removeing r
+    - xform/irinn/eng/
+    - xform/irinn/inn/
+    - xform/IR/ir/
+    - xform/ir/i/
+    - xform/ur/u/
+    - xform/er([^eptkmng]*)(h?)$/ue$1$2/
+    - xform/ere/e/
+
+    - derive/uinn/un/   # 暈
+    - derive/uang/ong/    
+    - xform/^ts/ch/                                 
+    - xform/nn$/ⁿ/
+    - xform/nnh$/hⁿ/
+    - xform/oo/o͘/      
+    - xform/ua/oa/      # 拖, 歪
+    - xform/ue/oe/      # 話
+    - xform/ing/eng/    # 英
+    - xform/ik/ek/      # 黑
+
+punctuator:
+  import_preset: default
+
+key_binder:
+  import_preset: default
+  bindings:
+    - { when: has_menu, accept: minus, send: minus }  # 第7調
+    - { when: paging, accept: minus, send: Page_Up }
+
+recognizer:
+  import_preset: default
+  patterns:
+    reverse_lookup: "`[a-z]*$"
+
+style:
+  display_tray_icon: false
+  font_face: "Microsoft Jhenghei"
+  font_point: 12
+  fullscreen: false
+  horizontal: true
+  inline_preedit: false
+  layout:
+    border_width: 3
+    candidate_spacing: 5
+    hilite_padding: 2
+    hilite_spacing: 4
+    margin_x: 12
+    margin_y: 6
+    min_height: 0
+    min_width: 160
+    round_corner: 4
+    spacing: 10
